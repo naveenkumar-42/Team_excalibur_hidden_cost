@@ -45,7 +45,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     } else if (url.includes('meesho')) {
       highlightMeeshoProductDetails();
     }
-    
+
     // Save the highlighting state in storage
     chrome.storage.local.set({ isHighlighting: isHighlighting });
   }
