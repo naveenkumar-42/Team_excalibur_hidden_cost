@@ -1,16 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const turnOnButton = document.getElementById('turnOnButton');
-  const turnOffButton = document.getElementById('turnOffButton');
+  const toggleHighlightingCheckbox = document.getElementById('toggleHighlightingCheckbox');
 
-  turnOnButton.addEventListener('click', function() {
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, { action: 'toggleHighlighting', isHighlighting: true });
-    });
+  // Load the current highlighting state from storage and update the checkbox
+  chrome.storage.local.get(['isHighlighting'], function(result) {
+    const isHighlighting = result.isHighlighting || false;
+    toggleHighlightingCheckbox.checked = isHighlighting;
   });
 
-  turnOffButton.addEventListener('click', function() {
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, { action: 'toggleHighlighting', isHighlighting: false });
-    });
+  // Handle checkbox change event
+  toggleHighlightingCheckbox.addEventListener('change', function() {
+    const isHighlighting = toggleHighlightingCheckbox.checked;
+    chrome.runtime.sendMessage({ action: 'toggleHighlighting', isHighlighting });
+
+    // Save the highlighting state in storage
+    chrome.storage.local.set({ isHighlighting: isHighlighting });
   });
 });
