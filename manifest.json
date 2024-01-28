@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "Product Highlighter",
+  "version": "1.0",
+  "description": "Highlights product details and price on ecommerce websites",
+  "icons": {
+    "128": "/images/highlighter.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
