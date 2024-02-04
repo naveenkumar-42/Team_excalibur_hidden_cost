@@ -133,10 +133,10 @@ function highlightFlipkartProductDetails() {
 
 
 function highlightMeeshoProductDetails() {
-  const productPrices = document.querySelectorAll('#__next div.sc-bcXHqe.eWRWAb.ShippingInfo__PriceRow-sc-frp12n-1.eMWeDN h4');
-  const MRP = document.querySelectorAll('#__next div.sc-bcXHqe.eWRWAb.ShippingInfo__PriceRow-sc-frp12n-1.eMWeDN p');
-  const productTitles = document.querySelectorAll('#__next div.sc-bcXHqe.hcOLTO.ShippingInfo__DetailCard-sc-frp12n-0.dKuTbW span');
-  const productOffer = document.querySelectorAll('#__next div.sc-bcXHqe.eWRWAb.ShippingInfo__PriceRow-sc-frp12n-1.eMWeDN span.sc-dkrFOg.hSBOpl');
+  const productPrices = document.querySelectorAll('#_next div.sc-bcXHqe.eWRWAb.ShippingInfo_PriceRow-sc-frp12n-1.eMWeDN h4');
+  const MRP = document.querySelectorAll('#_next div.sc-bcXHqe.eWRWAb.ShippingInfo_PriceRow-sc-frp12n-1.eMWeDN p');
+  const productTitles = document.querySelectorAll('#_next div.sc-bcXHqe.hcOLTO.ShippingInfo_DetailCard-sc-frp12n-0.dKuTbW span');
+  const productOffer = document.querySelectorAll('#_next div.sc-bcXHqe.eWRWAb.ShippingInfo_PriceRow-sc-frp12n-1.eMWeDN span.sc-dkrFOg.hSBOpl');
   const finalPrice = document.querySelectorAll('#app-layout-body div.sc-eEpejC.cDWdJc span:nth-child(2)');
 
   function meeshoPriceDifference(fullPrice, offerPrice) {
