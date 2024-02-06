@@ -22,6 +22,7 @@ chrome.storage.local.get([
   'amazonPriceDifference',
   'amazonFullPrice',
   'amazonDiscountPrices',
+  'amazonComparePrice',
   'flipkartPriceDifference',
   'flipkartFullPrices',
   'flipkartOfferPrice',
@@ -32,6 +33,7 @@ chrome.storage.local.get([
   console.log('Amazon Price Difference:', result.amazonPriceDifference);
   console.log('Discount Prices:', result.amazonDiscountPrices);
   console.log('Full price :', result.amazonFullPrice);
+  console.log('Amazon Compare Price:', result.amazonComparePrice);
   console.log('Flipkart Price Difference:', result.flipkartPriceDifference);
   console.log('Discount Prices:', result.flipkartOfferPrice);
   console.log('Full price :', result.flipkartFullPrices);

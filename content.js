@@ -67,29 +67,37 @@ function highlightAmazonProductDetails() {
   fullprice(fullPrice);
   final(productTotal);
 
-function amazonPriceDifference(fullPrice, discountPrice) {
-  return fullPrice - (fullPrice * discountPrice);
+
+  function amazoncompareprice(fullPrice, amazonPriceDifference) {
+    if (fullPrice < amazonPriceDifference) {
+      return "Hidden cost is there";
+    } else {
+      return "Hidden cost is not there";
+    }
+  }
+
+  let amazonPriceDifferenceArray = Array.from(fullPrice).map((price, index) => {
+    let fullPriceValue = parseFloat(price.textContent.replace(/,/g, '').replace('₹', '').split('₹')[0]);
+    let discountPrice = parseFloat(discountPrices[index]?.textContent.replace(/,/g, '').replace('-', '').replace('%', '')) / 100;
+    let amazonPriceDifference = fullPriceValue - (fullPriceValue * discountPrice);
+    return fullPriceValue - amazonPriceDifference;
+  });
+
+  let amazonComparePriceArray = amazonPriceDifferenceArray.map((amazonPriceDifference, index) => {
+    let fullPriceValue = parseFloat(fullPrice[index]?.textContent.replace(/,/g, '').replace('₹', '').split('₹')[0]);
+    return amazoncompareprice(fullPriceValue, amazonPriceDifference);
+  });
+
+  chrome.storage.local.set({
+    'amazonProductPrices': Array.from(productPrices).map(price => parseFloat(price.textContent.replace(/,/g, '').replace('₹', ''))),
+    'amazonProductTitles': Array.from(productTitles).map(title => title.textContent),
+    'amazonDiscountPrices': Array.from(discountPrices).map(price => parseFloat(price.textContent.replace(/,/g, '').replace('-', '').replace('%', '')) / 100),
+    'amazonFullPrice': Array.from(fullPrice).map(price => parseFloat(price.textContent.replace(/,/g, '').replace('₹', '').split('₹')[0])),
+    'amazonProductTotal': Array.from(productTotal).map(total => total.textContent),
+    'amazonPriceDifference': amazonPriceDifferenceArray,
+    'amazonComparePrice': amazonComparePriceArray
+  });
 }
-
-chrome.storage.local.set({
-  'amazonProductPrices': Array.from(productPrices).map(price => parseFloat(price.textContent.replace(/,/g, '').replace('₹', ''))),
-  'amazonProductTitles': Array.from(productTitles).map(title => title.textContent),
-  'amazonDiscountPrices': Array.from(discountPrices).map(price => parseFloat(price.textContent.replace(/,/g, '').replace('-', '').replace('%', '')) / 100),
-  'amazonFullPrice': Array.from(fullPrice).map(price => parseFloat(price.textContent.replace(/,/g, '').replace('₹', '').split('₹')[0])),
-  'amazonProductTotal': Array.from(productTotal).map(total => total.textContent),
-  'amazonPriceDifference': Array.from(fullPrice).map((price, index) => amazonPriceDifference(parseFloat(price.textContent.replace(/,/g, '').replace('₹', '').split('₹')[0]), parseFloat(discountPrices[index]?.textContent.replace(/,/g, '').replace('-', '').replace('%', '')) / 100))
-});
-
-chrome.storage.local.set({
-  'amazonProductPrices': amazonProductPrices,
-  'amazonProductTitles': amazonProductTitles,
-  'amazonDiscountPrices': amazonDiscountPrices,
-  'amazonFullPrice': amazonFullPrice,
-  'amazonPriceDifference': amazonPriceDifferenceArray
-});
-
-}
-
 
 function highlightFlipkartProductDetails() {
   const productPrices = document.querySelectorAll('#container div._30jeq3._16Jk6d,#container > div > div._1Er18h > div > div._1YokD2._2GoDe3.col-12-12 > div:nth-child(1) > div > div:nth-child(3) > div > div._2nQDXZ > div._3fSRat > span._2-ut7f._1WpvJ7');
