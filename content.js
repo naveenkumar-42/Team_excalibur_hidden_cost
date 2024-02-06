@@ -70,9 +70,9 @@ function highlightAmazonProductDetails() {
 
   function amazoncompareprice(productPrice, amazonPriceDifference) {
     if (productPrice > amazonPriceDifference) {
-      return "Hidden cost is there";
+      return "there is hidden cost";
     } else {
-      return "Hidden cost is not there";
+      return "there is no hidden cost";
     }
   }
 
@@ -105,81 +105,119 @@ function highlightAmazonProductDetails() {
   });
 }
 
-function highlightFlipkartProductDetails() {
-  const productPrices = document.querySelectorAll('#container div._30jeq3._16Jk6d,#container > div > div._1Er18h > div > div._1YokD2._2GoDe3.col-12-12 > div:nth-child(1) > div > div:nth-child(3) > div > div._2nQDXZ > div._3fSRat > span._2-ut7f._1WpvJ7');
-  const productTitles = document.querySelectorAll('#container h1 span.B_NuCI');
-  const fullPrices = document.querySelectorAll('#container > div > div._2c7YLP.UtUXW0._6t1WkM._3HqJxg > div._1YokD2._2GoDe3 > div._1YokD2._3Mn1Gg.col-8-12 > div:nth-child(2) > div > div.dyC4hf > div.CEmiEU > div > div._3I9_wc._2p6lqe,#container > div > div._1Er18h > div > div > div:nth-child(1) > div > div:nth-child(3) > div > div._2nQDXZ > div._3fSRat > span._2-ut7f._2xc6hH');
-  const offerPrice = document.querySelectorAll('#container > div > div._2c7YLP.UtUXW0._6t1WkM._3HqJxg > div._1YokD2._2GoDe3 > div._1YokD2._3Mn1Gg.col-8-12 > div:nth-child(2) > div > div.dyC4hf > div.CEmiEU > div > div._3Ay6Sb._31Dcoz,#container > div > div._1Er18h > div > div > div:nth-child(1) > div > div:nth-child(3) > div > div._2nQDXZ > div._3fSRat > span.dML6Ak');
-  const finalPrice = document.querySelectorAll('#container > div > div._1Er18h > div > div._1YokD2._2GoDe3.col-12-12 > div._1YokD2._3Mn1Gg.col-4-12._78xt5Y > div._1AtVbE.col-12-12 > div > div > div > div._3LxTgx > div > div.z4Ha90 > span > div > div > div.z4Ha90');
+//flipcart details
 
+function highlightFlipkartProductDetails() {
+  const productPrices = document.querySelectorAll('#container div._30jeq3._16Jk6d, #container > div > div._1Er18h > div > div._1YokD2._2GoDe3.col-12-12 > div:nth-child(1) > div > div:nth-child(3) > div > div._2nQDXZ > div._3fSRat > span._2-ut7f._1WpvJ7');
+  const productTitles = document.querySelectorAll('#container h1 span.B_NuCI');
+  const fullPrices = document.querySelectorAll('#container > div > div._2c7YLP.UtUXW0._6t1WkM._3HqJxg > div._1YokD2._2GoDe3 > div._1YokD2._3Mn1Gg.col-8-12 > div:nth-child(2) > div > div.dyC4hf > div.CEmiEU > div > div._3I9_wc._2p6lqe, #container > div > div._1Er18h > div > div > div:nth-child(1) > div > div:nth-child(3) > div > div._2nQDXZ > div._3fSRat > span._2-ut7f._2xc6hH');
+  const discountPercentages = document.querySelectorAll('#container > div > div._2c7YLP.UtUXW0._6t1WkM._3HqJxg > div._1YokD2._2GoDe3 > div._1YokD2._3Mn1Gg.col-8-12 > div:nth-child(2) > div > div.dyC4hf > div.CEmiEU > div > div._3Ay6Sb._31Dcoz, #container > div > div._1Er18h > div > div > div:nth-child(1) > div > div:nth-child(3) > div > div._2nQDXZ > div._3fSRat > span.dML6Ak');
+  const finalPrices = document.querySelectorAll('#container > div > div._1Er18h > div > div._1YokD2._2GoDe3.col-12-12 > div._1YokD2._3Mn1Gg.col-4-12._78xt5Y > div._1AtVbE.col-12-12 > div > div > div > div._3LxTgx > div > div.z4Ha90 > span > div > div > div.z4Ha90');
+
+  // Call functions to process data
   price(productPrices);
   title(productTitles);
-  discount(fullPrices);
-  offer(offerPrice);
-  final(finalPrice);
+  fullprice(fullPrices);
+  offer(discountPercentages);
+  final(finalPrices);
 
-  function flipkartPriceDifference(fullPrice, offerPrice) {
-    const fullPriceValue = parseFloat(fullPrice.replace(/,/g, '').replace('₹', ''));
-    const offerPriceValue = parseFloat(offerPrice.replace('% off', '')) / 100;
-    return fullPriceValue - (fullPriceValue * offerPriceValue);
+  // Function to compare product price and offer price
+  function flipkartcompareprice(productPrice, offerPrice) {
+    if (productPrice > offerPrice) {
+      return "there is hidden cost";
+    } else {
+      return "there is no hidden cost";
+    }
   }
 
-  chrome.storage.local.set({
-    'flipkartProductPrices': Array.from(productPrices).map(price => price.textContent),
-    'flipkartProductTitles': Array.from(productTitles).map(title => title.textContent),
-    'flipkartFullPrices': Array.from(fullPrices).map(price => price.textContent),
-    'flipkartOfferPrice': Array.from(offerPrice).map(price => price.textContent),
-    'flipkartFinalPrice': Array.from(finalPrice).map(price => price.textContent),
-    'flipkartPriceDifference': Array.from(fullPrices).map((price, index) => flipkartPriceDifference(price.textContent, offerPrice[index].textContent))
+  // Extract offer prices from full prices and calculate discount difference
+  let offerPricesArray = Array.from(fullPrices).map((price, index) => {
+    let fullPriceValue = parseFloat(price.textContent.replace(/,/g, '').replace('₹', '').split('₹')[0]);
+    let discountPercentage = parseFloat(discountPercentages[index]?.textContent.replace(/,/g, '').replace('-', '').replace('%', ''));
+    let offerPrice = fullPriceValue - (fullPriceValue * discountPercentage / 100);
+    return offerPrice;
   });
 
+  // Compare product price with offer price for each product
+  let flipkartComparePriceArray = offerPricesArray.map((offerPrice, index) => {
+    let productPriceValue = parseFloat(productPrices[index]?.textContent.replace(/,/g, '').replace('₹', ''));
+    return flipkartcompareprice(productPriceValue, offerPrice);
+  });
+
+
+  let discountDifferenceArray = offerPricesArray.map((offerPrice, index) => {
+    let productPriceValue = parseFloat(productPrices[index]?.textContent.replace(/,/g, '').replace('₹', ''));
+    return productPriceValue - offerPrice;
+  });
+
+  // Store the extracted data in Chrome local storage
   chrome.storage.local.set({
-    'flipkartProductPrices': flipkartProductPrices,
-    'flipkartProductTitles': flipkartProductTitles,
-    'flipkartFullPrices': flipkartFullPrices,
-    'flipkartOfferPrice': flipkartOfferPrice,
-    'flipkartPriceDifference': flipkartPriceDifference
+    'flipkartProductPrices': Array.from(productPrices).map(price => parseFloat(price.textContent.replace(/,/g, '').replace('₹', ''))),
+    'flipkartProductTitles': Array.from(productTitles).map(title => title.textContent),
+    'flipkartFullPrices': Array.from(fullPrices).map(price => parseFloat(price.textContent.replace(/,/g, '').replace('₹', '').split('₹')[0])),
+    'flipkartOfferPrices': Array.from(discountPercentages).map(price => parseFloat(price.textContent.replace(/,/g, '').replace('-', '').replace('%', '')) / 100),
+    'flipkartPriceDifference': offerPricesArray,
+    'flipkartFinalPrices': Array.from(finalPrices).map(price => price.textContent),
+    'flipkartComparePrice': flipkartComparePriceArray,
+    'flipkartdiscountDifference': discountDifferenceArray
   });
 }
 
 
+
+
+
+
 // meesho function
-
-
 function highlightMeeshoProductDetails() {
-  const productPrices = document.querySelectorAll('#_next div.sc-bcXHqe.eWRWAb.ShippingInfo_PriceRow-sc-frp12n-1.eMWeDN h4');
-  const MRP = document.querySelectorAll('#_next div.sc-bcXHqe.eWRWAb.ShippingInfo_PriceRow-sc-frp12n-1.eMWeDN p');
+ const productPrices = document.querySelectorAll('#_next div.sc-bcXHqe.eWRWAb.ShippingInfo_PriceRow-sc-frp12n-1.eMWeDN h4');
+  const fullPriceElements = document.querySelectorAll('#_next div.sc-bcXHqe.eWRWAb.ShippingInfo_PriceRow-sc-frp12n-1.eMWeDN p');
   const productTitles = document.querySelectorAll('#_next div.sc-bcXHqe.hcOLTO.ShippingInfo_DetailCard-sc-frp12n-0.dKuTbW span');
-  const productOffer = document.querySelectorAll('#_next div.sc-bcXHqe.eWRWAb.ShippingInfo_PriceRow-sc-frp12n-1.eMWeDN span.sc-dkrFOg.hSBOpl');
-  const finalPrice = document.querySelectorAll('#app-layout-body div.sc-eEpejC.cDWdJc span:nth-child(2)');
+  const discountPrices = document.querySelectorAll('#_next div.sc-bcXHqe.eWRWAb.ShippingInfo_PriceRow-sc-frp12n-1.eMWeDN span.sc-dkrFOg.hSBOpl');
+  const finalPrices = document.querySelectorAll('#app-layout-body div.sc-eEpejC.cDWdJc span:nth-child(2)');
+ 
+  // Call functions to process data
+  price(productPrices);
+  title(productTitles);
+  fullprice(fullPriceElements);
+  discount(discountPrices);
+  final(finalPrices);
 
-  function meeshoPriceDifference(fullPrice, offerPrice) {
-    return fullPrice -(fullPrice * offerPrice);
-  }
-
-  const meeshoProductPrices = Array.from(productPrices).map(price => price.textContent);
+  const meeshoProductPrices = Array.from(productPrices).map(price => parseFloat(price.textContent.replace(/,/g, '').replace('₹', '')));
   const meeshoProductTitles = Array.from(productTitles).map(title => title.textContent);
-  const meeshoMRP = Array.from(MRP).map(price => price.textContent);
-  const meeshoProductOffer = Array.from(productOffer).map(offer => offer.textContent);
-  const meeshoFinalPrices = Array.from(finalPrice).map(total => total.textContent);
+  const meeshoFullPrices = Array.from(fullPriceElements).map(price => parseFloat(price.textContent.replace(/,/g, '').replace('₹', '')));
+  const meeshoDiscountPrices = Array.from(discountPrices).map(price => parseFloat(price.textContent.replace(/,/g, '').replace('₹', ''))/100);
+  const meeshoFinalPrices = Array.from(finalPrices).map(total => parseFloat(total.textContent.replace(/,/g, '').replace('₹', '')));
 
-  const meeshoPriceDifferenceArray = Array.from(MRP).map((MRP, index) => {
-    const fullPrice = parseFloat(MRP.textContent.replace(/,/g, '').replace('₹', ''));
-    const offerPrice = parseFloat(productOffer[index].textContent.replace(/,/g, '').replace('₹', ''))/100;
-    return meeshoPriceDifference(fullPrice, offerPrice);
-    
+  const meeshoPriceDifferenceArray = Array.from(fullPriceElements).map((fullPrice, index) => {
+    const fullPriceValue = parseFloat(fullPrice.textContent.replace(/,/g, '').replace('₹', ''));
+    const discountPrice = parseFloat(discountPrices[index].textContent.replace(/,/g, '').replace('₹', ''))/100;
+    return calculateMeeshoPriceDifference(fullPriceValue, discountPrice);
+  });
+
+  const meeshoComparePriceArray = meeshoProductPrices.map((productPrice, index) => {
+    return compareMeeshoPrice(productPrice, meeshoPriceDifferenceArray[index]);
+  });
+
+  const meeshoDiscountDifferenceArray = meeshoPriceDifferenceArray.map((meeshoPriceDifference, index) => {
+    return meeshoPriceDifference - meeshoProductPrices[index];
   });
 
   // Store the values in Chrome local storage
   chrome.storage.local.set({
     'meeshoProductPrices': meeshoProductPrices,
     'meeshoProductTitles': meeshoProductTitles,
-    'meeshoMRP': meeshoMRP,
-    'meeshoProductOffer': meeshoProductOffer,
-    'meeshofinalPrice': meeshoFinalPrices,
-    'meeshoPriceDifference': meeshoPriceDifferenceArray
+    'meeshoFullPrices': meeshoFullPrices,
+    'meeshoDiscountPrices': meeshoDiscountPrices,
+    'meeshoFinalPrices': meeshoFinalPrices,
+    'meeshoPriceDifference': meeshoPriceDifferenceArray,
+    'meeshoComparePrice': meeshoComparePriceArray,
+    'meeshoDiscountDifference': meeshoDiscountDifferenceArray
   });
 }
+
+
+
 
 
 
