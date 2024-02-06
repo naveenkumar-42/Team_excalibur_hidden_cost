@@ -68,8 +68,8 @@ function highlightAmazonProductDetails() {
   final(productTotal);
 
 
-  function amazoncompareprice(fullPrice, amazonPriceDifference) {
-    if (fullPrice < amazonPriceDifference) {
+  function amazoncompareprice(productPrice, amazonPriceDifference) {
+    if (productPrice > amazonPriceDifference) {
       return "Hidden cost is there";
     } else {
       return "Hidden cost is not there";
@@ -80,12 +80,17 @@ function highlightAmazonProductDetails() {
     let fullPriceValue = parseFloat(price.textContent.replace(/,/g, '').replace('₹', '').split('₹')[0]);
     let discountPrice = parseFloat(discountPrices[index]?.textContent.replace(/,/g, '').replace('-', '').replace('%', '')) / 100;
     let amazonPriceDifference = fullPriceValue - (fullPriceValue * discountPrice);
-    return fullPriceValue - amazonPriceDifference;
+    return amazonPriceDifference;
   });
 
   let amazonComparePriceArray = amazonPriceDifferenceArray.map((amazonPriceDifference, index) => {
-    let fullPriceValue = parseFloat(fullPrice[index]?.textContent.replace(/,/g, '').replace('₹', '').split('₹')[0]);
-    return amazoncompareprice(fullPriceValue, amazonPriceDifference);
+    let productPriceValue = parseFloat(productPrices[index]?.textContent.replace(/,/g, '').replace('₹', ''));
+    return amazoncompareprice(productPriceValue, amazonPriceDifference);
+  });
+
+   let discountDifferenceArray = amazonPriceDifferenceArray.map((amazonPriceDifference, index) => {
+    let productPriceValue = parseFloat(productPrices[index]?.textContent.replace(/,/g, '').replace('₹', ''));
+    return amazonPriceDifference - productPriceValue;
   });
 
   chrome.storage.local.set({
@@ -95,7 +100,8 @@ function highlightAmazonProductDetails() {
     'amazonFullPrice': Array.from(fullPrice).map(price => parseFloat(price.textContent.replace(/,/g, '').replace('₹', '').split('₹')[0])),
     'amazonProductTotal': Array.from(productTotal).map(total => total.textContent),
     'amazonPriceDifference': amazonPriceDifferenceArray,
-    'amazonComparePrice': amazonComparePriceArray
+    'amazonComparePrice': amazonComparePriceArray,
+    'discountDifference' : discountDifferenceArray 
   });
 }
 
