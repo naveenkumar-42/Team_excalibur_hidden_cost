@@ -96,7 +96,7 @@ function highlightFlipkartProductDetails() {
 
   let discountDifferenceArray = offerPricesArray.map((offerPrice, index) => {
     let productPriceValue = parseFloat(productPrices[index]?.textContent.replace(/,/g, '').replace('₹', ''));
-    let ans = offerPrice - productPriceValue;
+    let ans = productPriceValue - offerPrice ;
     return ans.toFixed(2);
   });
 
