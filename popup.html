@@ -1,144 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Highlighter</title>
-  <link rel="stylesheet" href="popup.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Highlighter</title>
+    <link rel="stylesheet" href="popup.css" />
 
-  <style>
-    :root {
-    --bg-color: #081b29;
-    --secondary-bg-color: #112e42;
-    --text-color: #E0FFFF;
-    --main-color: #00FA9A;
+    <style>
+      :root {
+        --bg-color: #081b29;
+        --secondary-bg-color: #112e42;
+        --text-color: #e0ffff;
+        --main-color: #00fa9a;
+      }
+
+      body {
+        width: 300px;
+        padding: 20px;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .popup-container {
+        text-align: center;
+      }
+
+      .header {
+        background-color: var(--secondary-bg-color);
+        color: #ffffff;
+        padding: 10px;
+        border-radius: 5px 5px 0 0;
+      }
+
+      .header h1 {
+        margin: 0;
+      }
+
+      .main-content {
+        padding: 20px;
+      }
+
+      p {
+        margin: 10px 0;
+      }
+
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: #fff;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .slider {
+        background-color: var(--main-color);
+      }
+
+      input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+      }
+
+      .button-container {
+        margin-top: 20px;
+      }
+
+      button {
+        margin: 5px;
+        padding: 10px;
+        background-color: var(--main-color);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+      .result {
+     margin-top: 20px;
+     padding: 20px;
+     background-color: var(--secondary-bg-color);
+     border-radius: 5px;
+      align-items: center;
+    justify-content: center;
+    }
+
+     .result h2 {
+     margin-bottom: 10px;
+     }
+
+     .compare-price {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: var(--secondary-bg-color);
+  border-radius: 5px;
 }
 
-body {
-    width: 300px;
-    padding: 20px;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
 
-.popup-container {
-    text-align: center;
-}
-
-.header {
-    background-color: var(--secondary-bg-color);
-    color: #ffffff;
-    padding: 10px;
-    border-radius: 5px 5px 0 0;
-}
-
-.header h1 {
-    margin: 0;
-}
-
-.main-content {
-    padding: 20px;
-}
-
-p {
-    margin: 10px 0;
-}
-
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-    border-radius: 34px;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: #fff;
-    -webkit-transition: .4s;
-    transition: .4s;
-    border-radius: 50%;
-}
-
-input:checked+.slider {
-    background-color: var(--main-color);
-}
-
-input:checked+.slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-}
-
-.button-container {
-    margin-top: 20px;
-}
-
-button {
-    margin: 5px;
-    padding: 10px;
-    background-color: var(--main-color);
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #2980b9;
-}
-  </style>
-</head>
-<body>
-  <div class="popup-container">
-    <div class="header">
-      <h1>Product Highlighter</h1>
+    </style>
+  </head>
+  <body>
+    <div class="popup-container">
+      <div class="header">
+        <h1>Product Highlighter</h1>
+      </div>
+      <div class="main-content">
+        <p>Toggle highlighting for products:</p>
+        <label class="switch">
+          <input type="checkbox" id="toggleHighlightingCheckbox" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <!-- HTML elements to display values -->
+      <div class="result" id="result_section" >
+    <p id="amazonFullPrice"></p>
+    <p id="amazonDiscountPrices"></p>
+    <p id="amazonPriceDifference"></p>
+    <p id="amazonComparePrice"></p>
+    <p id="discountDifference"></p>
+    <p id="flipkartFullPrices"></p>
+    <p id="flipkartOfferPrices"></p>
+    <p id="flipkartPriceDifference"></p>
+    <p id="flipkartComparePrice"></p>
+    <p id="flipkartdiscountDifference"></p>
     </div>
-    <div class="main-content">
-      <p>Toggle highlighting for products:</p>
-      <label class="switch">
-        <input type="checkbox" id="toggleHighlightingCheckbox">
-        <span class="slider"></span>
-      </label>
-    </div>
-    <!-- HTML elements to display values -->
-<div id="amazonFullPrice"></div>
-<div id="amazonDiscountPrices"></div>
-<div id="amazonPriceDifference"></div>
-<div id="amazonComparePrice"></div>
-<div id="discountDifference"></div>
-<div id="flipkartFullPrices"></div>
-<div id="flipkartOfferPrices"></div>
-<div id="flipkartPriceDifference"></div>
-<div id="flipkartComparePrice"></div>
-<div id="flipkartdiscountDifference"></div>
 
-  </div>
-  <script src="popup.js"></script>
-</body>
+    <script src="popup.js"></script>
+  </body>
 </html>

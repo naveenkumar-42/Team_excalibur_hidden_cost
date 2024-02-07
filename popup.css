@@ -103,3 +103,11 @@ button {
 button:hover {
     background-color: #2980b9;
 }
+ .message-box {
+     display: none;
+     background-color: #f0f0f0;
+     padding: 10px;
+     border: 1px solid #ccc;
+     border-radius: 5px;
+     margin-top: 10px;
+ }

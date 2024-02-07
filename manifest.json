@@ -6,7 +6,7 @@
   "icons": {
     "128": "/images/highlighter.png"
   },
-  "permissions": ["activeTab", "storage"],
+  "permissions": ["activeTab", "storage","notifications"],
   "background": {
     "service_worker": "background.js"
   },

@@ -44,7 +44,7 @@ function highlightAmazonProductDetails() {
 
    let discountDifferenceArray = amazonPriceDifferenceArray.map((amazonPriceDifference, index) => {
     let productPriceValue = parseFloat(productPrices[index]?.textContent.replace(/,/g, '').replace('₹', ''));
-    return amazonPriceDifference - productPriceValue;
+    return  productPriceValue -  amazonPriceDifference;
   });
 
   chrome.storage.local.set({
@@ -101,7 +101,7 @@ function highlightFlipkartProductDetails() {
 
   let discountDifferenceArray = offerPricesArray.map((offerPrice, index) => {
     let productPriceValue = parseFloat(productPrices[index]?.textContent.replace(/,/g, '').replace('₹', ''));
-    return productPriceValue - offerPrice;
+    return offerPrice - productPriceValue;
   });
 
   // Store the extracted data in Chrome local storage
