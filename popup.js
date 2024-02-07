@@ -29,28 +29,23 @@ chrome.storage.local.get([
   'flipkartOfferPrices',
   'flipkartComparePrice',
   'flipkartdiscountDifference',
-  'meeshoPriceDifference',
-  'meeshoComparePrice',
-  'meeshoFullPrices',
-  'meeshoDiscountPrices',
-  'meeshoComparePrice',
-  'meeshodiscountDifference'
   
 ], function (result) {
-  console.log('Amazon Price Difference:', result.amazonPriceDifference);
-  console.log('amazon Discount Prices:', result.amazonDiscountPrices);
+ 
   console.log('amazon Full price :', result.amazonFullPrice);
+  console.log('amazon Discount Prices:', result.amazonDiscountPrices);
+  console.log('Amazon Price Difference:', result.amazonPriceDifference);
   console.log('Amazon Compare Price:', result.amazonComparePrice);
   console.log('amazon Discount Difference:', result.discountDifference);
-  console.log('Flipkart Price Difference:', result.flipkartPriceDifference);
-  console.log('flipcart Discount Prices:', result.flipkartOfferPrices);
   console.log('flipcart Full price :', result.flipkartFullPrices);
+  console.log('flipcart Discount Prices:', result.flipkartOfferPrices);
+  console.log('Flipkart Price Difference:', result.flipkartPriceDifference);
   console.log('Flipkart Compare Price:', result.flipkartComparePrice);
   console.log('flipcart Discount Difference:', result.flipkartdiscountDifference);
-  console.log('meesho Price Difference:', result.meeshoPriceDifference);
-  console.log('meesho Discount Prices:', result.meeshoDiscountPrices);
-  console.log('meesho Full price :', result.meeshoFullPrices);
-  console.log('meesho Compare Price:', result.meeshoComparePrice);
-  console.log('meesho Discount Difference:', result.meeshodiscountDifference);
+  // console.log('meesho Price Difference:', result.meeshoPriceDifference);
+  // console.log('meesho Discount Prices:', result.meeshoDiscountPrices);
+  // console.log('meesho Full price :', result.meeshoFullPrices);
+  // console.log('meesho Compare Price:', result.meeshoComparePrice);
+  // console.log('meesho Discount Difference:', result.meeshoDiscountDifference);
   
 });
