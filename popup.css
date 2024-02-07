@@ -103,11 +103,75 @@ button {
 button:hover {
     background-color: #2980b9;
 }
- .message-box {
-     display: none;
-     background-color: #f0f0f0;
-     padding: 10px;
-     border: 1px solid #ccc;
-     border-radius: 5px;
-     margin-top: 10px;
- }
+
+.result {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--secondary-bg-color);
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.result h2 {
+    margin-bottom: 10px;
+}
+
+.result h1 {
+    text-decoration: solid;
+    color: var(--main-color);
+    text-size-adjust: 20px;
+    border: 2px solid white;
+}
+
+
+/* animate */
+
+.text-animate {
+    position: relative;
+
+}
+
+.text-animate h3 {
+    font-size: 25px;
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: .7px var(--main-color);
+    background-image: -webkit-linear-gradient(var(--main-color));
+    background-image: linear-gradient(var(--main-color), var(--main-color));
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-position: 0 0;
+
+}
+
+ .text-animate h3 {
+    animation: homeBgText 6s linear infinite;
+    animation-delay: 2s;
+}
+
+ .text-animate h3::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    border-right: 2px solid var(--main-color);
+    z-index: -1;
+}
+
+@keyframes homeBgText {
+
+    0%,
+    10%,
+    100% {
+        background-position: -33rem 0;
+    }
+
+    65%,
+    85% {
+        background-position: 0 0;
+    }
+}

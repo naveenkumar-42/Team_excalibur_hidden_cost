@@ -112,25 +112,8 @@
       button:hover {
         background-color: #2980b9;
       }
-      .result {
-     margin-top: 20px;
-     padding: 20px;
-     background-color: var(--secondary-bg-color);
-     border-radius: 5px;
-      align-items: center;
-    justify-content: center;
-    }
+      
 
-     .result h2 {
-     margin-bottom: 10px;
-     }
-
-     .compare-price {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: var(--secondary-bg-color);
-  border-radius: 5px;
-}
 
 
     </style>
@@ -138,7 +121,9 @@
   <body>
     <div class="popup-container">
       <div class="header">
-        <h1>Product Highlighter</h1>
+        <div class="text-animate">
+        <h3>Hidden Cost Identifier</h3>
+      </div>
       </div>
       <div class="main-content">
         <p>Toggle highlighting for products:</p>
@@ -152,13 +137,14 @@
     <p id="amazonFullPrice"></p>
     <p id="amazonDiscountPrices"></p>
     <p id="amazonPriceDifference"></p>
-    <p id="amazonComparePrice"></p>
     <p id="discountDifference"></p>
+    <p id="amazonComparePrice"></p>
     <p id="flipkartFullPrices"></p>
     <p id="flipkartOfferPrices"></p>
     <p id="flipkartPriceDifference"></p>
-    <p id="flipkartComparePrice"></p>
     <p id="flipkartdiscountDifference"></p>
+    <p id="flipkartComparePrice"></p>
+
     </div>
 
     <script src="popup.js"></script>
