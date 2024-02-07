@@ -114,39 +114,30 @@ function highlightFlipkartProductDetails() {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.action === 'toggleHighlighting') {
-    isHighlighting = request.isHighlighting; // Update highlighting state
-    // Execute the appropriate highlighting function based on the current URL
+    isHighlighting = request.isHighlighting; 
     const url = window.location.href;
     if (url.includes('amazon')) {
       highlightAmazonProductDetails();
     } else if (url.includes('flipkart')) {
       highlightFlipkartProductDetails();
     } else if (url.includes('meesho')) {
-      highlightMeeshoProductDetails(); // Include Meesho highlighting function
+      highlightMeeshoProductDetails(); 
     }
-
-    // Save the highlighting state in storage
     chrome.storage.local.set({ isHighlighting: isHighlighting });
   }
 });
 
-// Retrieve the highlighting state from storage on page load
 chrome.storage.local.get(['isHighlighting'], function(result) {
   isHighlighting = result.isHighlighting || false;
-  // Execute the appropriate highlighting function based on the current URL
   const url = window.location.href;
   if (url.includes('amazon')) {
     highlightAmazonProductDetails();
   } else if (url.includes('flipkart')) {
     highlightFlipkartProductDetails();
   } else if (url.includes('meesho')) {
-    highlightMeeshoProductDetails(); // Include Meesho highlighting function
+    highlightMeeshoProductDetails(); 
   }
 });
-
-// Your existing highlighting functions remain the same...
-
-// Execute the appropriate highlighting function when the page is loaded
 window.addEventListener('load', function() {
   const url = window.location.href;
   if (url.includes('amazon')) {
@@ -154,6 +145,6 @@ window.addEventListener('load', function() {
   } else if (url.includes('flipkart')) {
     highlightFlipkartProductDetails();
   } else if (url.includes('meesho')) {
-    highlightMeeshoProductDetails(); // Include Meesho highlighting function
+    highlightMeeshoProductDetails(); 
   }
 });
