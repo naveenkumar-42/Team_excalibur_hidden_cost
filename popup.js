@@ -61,6 +61,16 @@ function fetchAndDisplayValues() {
         document.getElementById('amazonPriceDifference').innerHTML = '<h2>Amazon Price Difference:</h2><p>' + result.amazonPriceDifference.join(', ') + '</p>';
         document.getElementById('discountDifference').innerHTML = '<h2>Amazon Discount Difference:</h2><p>' + result.discountDifference.join(', ') + '</p>';
         document.getElementById('amazonComparePrice').innerHTML = '<h1>' + result.amazonComparePrice.join(', ') + '</h1>';
+        let amazonComparePriceElement = document.getElementById('amazonComparePrice');
+    amazonComparePriceElement.innerHTML = '<h1>' + result.amazonComparePrice.join(', ') + '</h1>';
+    if (result.amazonComparePrice.some(price => price.includes('no'))) {
+      amazonComparePriceElement.style.color = '#00FA9A';
+      chrome.runtime.sendMessage({ action: 'setIcon', path: 'images/green.png' });
+      
+    } else {
+      amazonComparePriceElement.style.color = 'red';
+      chrome.runtime.sendMessage({ action: 'setIcon', path: 'images/red.png' });
+        }
         toggleElementsDisplay(['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'amazonComparePrice'], 'block');
         hideElements(['flipkartFullPrices', 'flipkartOfferPrices', 'flipkartPriceDifference', 'flipkartdiscountDifference', 'flipkartComparePrice']);
       } else if (selectedPlatform === 'flipkart') {
@@ -69,6 +79,15 @@ function fetchAndDisplayValues() {
         document.getElementById('flipkartPriceDifference').innerHTML = '<h2>Flipkart Price Difference:</h2><p>' + result.flipkartPriceDifference.join(', ') + '</p>';
         document.getElementById('flipkartdiscountDifference').innerHTML = '<h2>Flipkart Discount Difference:</h2><p>' + result.flipkartdiscountDifference.join(', ') + '</p>';
         document.getElementById('flipkartComparePrice').innerHTML = '<h1>' + result.flipkartComparePrice.join(', ') + '</h1>';
+         let flipkartComparePriceElement = document.getElementById('flipkartComparePrice');
+    flipkartComparePriceElement.innerHTML = '<h1>' + result.flipkartComparePrice.join(', ') + '</h1>';
+    if (result.flipkartComparePrice.some(price => price.includes('no'))) {
+      flipkartComparePriceElement.style.color = '#00FA9A';
+      chrome.runtime.sendMessage({ action: 'setIcon', path: 'images/green.png' });
+    } else {
+      flipkartComparePriceElement.style.color = 'red';
+      chrome.runtime.sendMessage({ action: 'setIcon', path: 'images/red.png' });
+    }
         toggleElementsDisplay(['flipkartFullPrices', 'flipkartOfferPrices', 'flipkartPriceDifference', 'flipkartdiscountDifference', 'flipkartComparePrice'], 'block');
         hideElements(['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'amazonComparePrice']);
       }

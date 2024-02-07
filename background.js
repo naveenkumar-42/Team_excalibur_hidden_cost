@@ -5,6 +5,22 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     isHighlighting = !isHighlighting; 
   }
 
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'setIcon') {
+    console.log('Received message:', message);
+    chrome.action.setIcon({ path: message.path }, () => {
+      if (chrome.runtime.lastError) {
+        console.log('Error setting icon:', chrome.runtime.lastError);
+        sendResponse({ success: false });
+      } else {
+        console.log('Icon set');
+        sendResponse({ success: true });
+      }
+    });
+  }
+  return true;  // Will respond asynchronously.
+});
+
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     const activeTab = tabs[0];
 
