@@ -4,11 +4,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.action === 'toggleHighlighting') {
     isHighlighting = !isHighlighting; 
 
-    if (isHighlighting) { // if the toggle is turned on
-      chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.reload(tabs[0].id);
-      });
-    }
+    // if (isHighlighting) { // if the toggle is turned on
+    //   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    //     chrome.tabs.reload(tabs[0].id);
+    //   });
+    // }
   }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -39,4 +39,16 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 chrome.storage.local.get(['isHighlighting'], function(result) {
   isHighlighting = result.isHighlighting || false;
+});
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  if (changeInfo.status === 'complete') {
+    isHighlighting = false;
+    chrome.storage.local.set({ isHighlighting: isHighlighting });
+    chrome.tabs.sendMessage(tabId, { action: 'toggleHighlighting', isHighlighting });
+
+    isHighlighting = true;
+    chrome.storage.local.set({ isHighlighting: isHighlighting });
+    chrome.tabs.sendMessage(tabId, { action: 'toggleHighlighting', isHighlighting });
+  }
 });
