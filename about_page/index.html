@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hidden_Cost</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <script src="https://unpkg.com/typed.js@2.0.16/dist/typed.umd.js"></script>
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+
+    --bg-color: #081b29;
+    --secondary-bg-color: #112e42;
+    --text-color: #E0FFFF;
+    --main-color:#00FA9A;  
+}
+
+html{
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+body{
+    background: #081b29;
+    color:var(--text-color) ;
+}
+
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem 9%;
+    background:transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    transition: .3s;
+}
+.header.sticky {
+    background: var(--secondary-bg-color);
+}
+.logo {
+    position: relative;
+    font-size: 1.7rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+.navbar{
+    position: relative;
+}
+
+.navbar a{
+    font-size: 1.7rem;
+    color: var(--text-color);
+    font-weight: 500;
+    margin-left: 3.5rem;
+}
+
+.navbar a:hover, 
+.navbar a.active{
+    color: var(--main-color);
+}
+
+#menu-icon {
+    position: f;
+    font-size: 3.6rem;
+    color: var(--text-color);
+    cursor: pointer;
+    display: none;
+}
+
+section{
+    min-height: 100vh;
+    padding: 10rem 9% 2rem;
+}
+
+.home {
+    display: flex;
+    align-items: center;
+    padding: 0 9%;
+    margin-top: 1rem;
+    background-position: 90% center;
+    background-repeat: no-repeat;}
+
+.home-content {
+    max-width: 60rem;
+    z-index: 99;
+}
+.home-content h1{
+    position: relative;
+    display: inline-block;
+    font-size:4rem ;
+    font-weight:700 ;
+    line-height: 1.3;
+}
+
+.home-content h1 span{
+    color:var(--text-color) ;
+}
+
+.home-content .text-animate{ 
+    position: relative;
+    width: 32.8rem;
+}
+
+.home-content .text-animate h3 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    color: transparent;
+    -webkit-text-stroke: .7px var(--main-color);
+    background-image: -webkit-linear-gradient(var(--main-color));
+    background-image: linear-gradient(var(--main-color),var(--main-color));
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-position: 0 0;
+    
+}
+
+.home.show-animate .home-content .text-animate h3 {
+    animation: homeBgText 6s linear infinite;
+    animation-delay: 2s;
+}
+.home.show-animate .home-content .text-animate h3::before {
+    animation: homeCursorText 6s linear infinite;
+    animation-delay: 2s;
+}
+
+.home-content p {
+    position: relative;
+    font-size: 1.6rem;
+    margin: 2rem 0 4rem;
+}
+
+.home-content .text-animate h3::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    border-right: 2px solid var(--main-color);
+    z-index: -1;
+}
+
+
+.btn-box {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: 34.5rem;
+    height: 5rem;
+}
+
+.btn-box .btn {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 15rem;
+    height: 100%;
+    background: var(--main-color);
+    border: .2rem solid var(--main-color);
+    border-radius: .8rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    color: var(--bg-color);
+    z-index:1 ;
+    overflow: hidden;
+    transition: .5s;
+}
+
+.btn-box .btn:nth-child(2){
+    background-color:transparent ;
+    color: var(--main-color);
+}
+.btn-box .btn:nth-child(2)::before {
+    background:var(--main-color) ;
+}
+
+.btn-box .btn:nth-child(2):hover{
+    color: var(--bg-color);
+
+}
+.btn-box .btn:hover{
+  color: var(--main-color);  
+
+}
+.btn-box .btn::before{
+    content:'' ;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: var(--bg-color);
+    z-index: -1;
+    transition: .5s;
+}
+.btn-box .btn:hover::before{
+    width: 100%;
+}
+
+
+
+.home-imghover{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45%;
+    height:100% ;
+    background: transparent;
+    transition:3s;
+
+}
+
+.home-imghover:hover{
+    background:#081b29;
+    opacity: .8;
+}
+
+.about{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+    background:var(--secondary-bg-color) ;
+    padding-bottom: 6rem;
+}
+.heading{
+    position: relative;
+    font-size: 5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+span {
+    color: var(--main-color);
+}
+.about-img{
+    position: relative;
+    width: 25rem;
+    height: 25rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-img img {
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    border: .2rem solid var(--main-color);
+}
+    .about-img .circle-spin {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%) rotate(0);
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border-top: .2rem solid var(--secondary-bg-color);
+        border-bottom: .2rem solid var(--secondary-bg-color);
+        border-left: .2rem solid var(--main-color);
+        border-right: .2rem solid var(--main-color);
+        animation: aboutSpinner 8s linear infinite;
+    }
+
+.about-content {
+    text-align:center ;
+}
+
+.about-content h3 {
+    font-size: 2.6rem;
+    position: relative;
+    display: inline-block;
+}
+
+.about-content p {
+    position: relative;
+    font-size: 1.6rem;
+    margin: 2rem 0 3rem;
+}
+
+.btn-box.btns {
+    display: inline-block;
+    width: 15rem;
+}
+
+.btn-box.btns a::before {
+    background:var(--secondary-bg-color) ;
+}
+.contact {
+    min-height: auto;
+    padding-bottom: 7rem;
+}
+
+.contact .input-box {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.contact .input-box .input-field {
+    width: calc(50% - 10px); /* Adjusted width */
+}
+
+.contact .input-box .input-field input,
+.contact .textarea-field textarea {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    font-size: 1.6rem;
+    color: var(--text-color);
+    background: transparent;
+    border-radius: .6rem;
+    border: .2rem solid var(--main-color);
+}
+
+.contact .input-box .input-field input::placeholder,
+.contact .textarea-field textarea::placeholder {
+    color: var(--text-color);
+}
+
+.contact .textarea-field textarea {
+    resize: none;
+}
+
+.contact .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem; /* Adjust margin as needed */
+}
+
+.contact form .btn {
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.6rem;
+    background-color: var(--main-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 0.6rem;
+    transition: background-color 0.3s ease;
+}
+
+.contact form .btn:hover {
+    background-color: var(--bg-color);
+    color: var(--main-color);
+}
+
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 2rem 9%;
+    
+
+}
+.footer-text,
+.footer-iconTop {
+position: relative;
+}
+.footer-text {
+    font-size: 1.6rem;
+}
+
+.footer-iconTop a{
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: .8rem;
+    background: var(--main-color);
+    border-radius:.6rem ;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.footer-iconTop a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: var(--secondary-bg-color);
+    z-index: -1;
+    transition: .5s;
+}
+
+.footer-iconTop a:hover::before{
+width: 100%;
+}
+
+.footer-iconTop a i {
+    font-size: 2.4rem;
+    color: var(--bg-color);
+    transition: .5s;
+}
+.footer-iconTop a:hover  i{
+    color: var(--main-color);
+}
+.animate {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background:var(--secondary-bg-color) ;
+    z-index: 98 ;  
+
+}
+.animate.home-img{
+    width: 50%;
+}
+
+.logo .animate, 
+.navbar .animate, 
+#menu-icon .animate,
+.home.show-animate .animate
+{
+    animation:showRight 1s ease forwards ;
+    animation-delay:calc(.3s * var(--i)) ;
+}
+
+.animate.scroll {
+    transition: 1s ease;
+    animation: none; 
+    transition-delay:calc(.3s * var(--i)) ;
+}
+
+.education .animate.scroll,
+.home .animate.scroll,
+.portfolio .animate.scroll,
+.contact .animate.scroll {
+    background: var(--bg-color);
+}
+
+.about.show-animate .animate.scroll,
+.education.show-animate .animate.scroll,
+.skills.show-animate .animate.scroll,
+.portfolio.show-animate .animate.scroll,
+.contact.show-animate .animate.scroll,
+.footer.show-animate .animate.scroll   {
+    transition-delay: calc(.3s * var(--i));
+    width: 0;
+}
+
+@media (max-width:1200px){
+    html{
+        font-size: 55%  ;
+    }
+}
+@media (max-width:991px){
+    .header{
+        padding: 2rem 4%;
+    }
+    .section {
+        padding: 10rem 4% 2rem;
+    }
+    .home {
+        padding: 0 4%;
+    }
+    .footer {
+        padding: 2rem 4%;
+    }
+}
+
+@media (max-width:768px){
+    .header{
+        background: var(--bg-color) ;
+    }
+    #menu-icon{
+        display: block;
+    }
+    .navbar {
+        position: absolute;
+        top: 100%;
+        left: -100%;
+        width: 100%;
+        padding: 1rem 4%;
+        background:var(--main-color) ;
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        transition: .25s ease;
+        transition-delay: .25s;
+    }
+
+    .navbar.active{
+        transition-delay: 0s;
+        left: 0;
+ 
+    }
+
+    .navbar .active-nav {
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: var(--bg-color);
+        border-top: 1rem solid rgba(0, 0, 0, 0.2);
+        z-index: -1;
+        transition:  .25s ease;
+        transition-delay: 0s;
+    }
+
+    .navbar.active .active-nav{
+        transition-delay: .25s;
+        left: 0;
+    }
+    .navbar a {
+        display:block ;
+        font-size: 2rem;
+        margin: 3rem 0;
+        transform: translateX(-20rem);
+        transition-delay:0s ;
+    }
+    .navbar.active a{
+        transform: translateX(0);
+        transition-delay: .25s;
+    }
+
+    .home-imghover{
+        pointer-events: none;
+        background:var(--bg-color) ;
+        opacity: .6 ;
+    }
+}
+
+@media (max-width:520px) {
+    html {
+        font-size: 50%;
+    }
+    .home-content h1{
+        display: flex;
+        flex-direction:column ;
+    }
+    .home-sci {
+        width: 160px;
+    }
+    .home-sci a{
+        width: 38px;
+        height: 38px ;
+    }
+}
+
+@media (max-width:460px){
+.home-content h1  {
+    font-size: 5.2rem;
+
+}
+.education{
+    padding:10rem 4% 5rem 5% ;
+}
+.contact form .input-box .input-field{
+    width:100% ;
+}
+.footer{
+    flex-direction: column-reverse;
+}
+.footer p{
+    margin-top: 2rem;
+    text-align: center;
+}
+}
+
+@media (max-width:371px) {
+    .home {
+        justify-content: center;
+
+    }
+    .home-content {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+    .home-content h1 {
+        font-size: 5rem;
+    }
+
+}
+
+@keyframes homeBgText {
+    0%,10%,100%{
+        background-position: -33rem 0;
+    }
+    65%,85%{
+        background-position: 0 0 ;
+    }
+}
+
+@keyframes homeCursorText {
+    0%,10%,100%{
+        width: 0;
+    }
+    65%,78%,85%{
+       width: 100%;
+       opacity: 1;
+    }
+    75%,81%{
+        opacity: 0;
+    }
+}
+
+@keyframes aboutSpinner {
+    100% {
+        transform: translate(-50%,-50%) rotate(360deg);
+    }
+}
+@keyframes showRight {
+    100% {
+        width: 0;
+    }
+    
+}
+
+.about-members {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next row */
+    justify-content: center; /* Center items horizontally */
+    gap: 20px; /* Add gap between items */
+}
+
+.about-member {
+    width: calc(33.33% - 20px); /* Adjust the width of each member */
+    text-align: center; /* Center the content within each member */
+}
+
+.about-member:nth-child(3n + 1) {
+    margin-left: auto; /* Push the first member of each row to the left */
+    margin-right: auto; /* Push the last member of each row to the right */
+}
+
+.about-member .about-img img {
+    width: 50%;
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 50%; /* Add border-radius for circular images */
+}
+
+
+.about-member .about-content {
+    width: 100%;
+    padding: 0 15px; /* Add padding to keep content aligned */
+}
+
+
+.button-container {
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+
+.read-more-button {
+    flex: 1; 
+    white-space: nowrap;
+    margin-right: -250px;
+}
+
+.download-button {
+    flex: 0; 
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+
+#home_img{
+    height: 700px;
+    width: 750px;
+    margin-left: 100px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+</style>
+
+</head>
+
+ <form method="post" action="/">
+<body>
+
+    <!-- header design -->
+    <header class="header">
+        <a href="#" class="logo">TEAM <span>EXCALIBUR</span><span class="animate" style="--i:1;"></span></a>
+        <div class="bx bx-menu" id="menu-icon"><span class="animate" style="--i:2;"></span></div>
+        <nav class="navbar">
+            <a href="#home" class="active">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <span class="active-nav"></span>
+            <span class="animate" style="--i:2;"></span>
+        </nav>
+    </header>
+    
+    <section class="home show-animate" id="home">
+        <!-- home section design -->
+          <div class="home-content">
+            <h1>Exploring Hidden Costs  :<span><br>
+                <span class="auto-type active-nav"></span>
+                <span class="animate" style="--i:2;"></span></h1>
+            <div class="text-animate">
+              <h3>Welcome</h3>
+              <span class="animate" style="--i:2;"></span>
+            </div>
+            <p>In the world of online shopping, there's often more than meets the eye. Hidden costs, those sneaky additional charges not readily apparent during a purchase, play a significant role. This presentation introduces our focus on exposing these concealed fees using web scraping, particularly with Beautiful Soup. Our goal is simple – to empower consumers with the knowledge they need to make informed decisions. Join us as we uncover the hidden side of e-commerce and discuss its impact on your shopping experience.
+            <span class="animate" style="--i:4;"></span>
+            </p>
+            <div class="btn-box">
+              <a target="_blank" href="#Scraper" class="btn">Learn More</a>
+              <a target="_blank" href="https://github.com/naveenkumar-42/hidden_cost.git" class="btn">Project Detail</a> 
+              <span class="animate" style="--i:5;"></span>
+            </div>
+          </div>
+          <!-- <img id="home_img" src="./img/its me.jpg"> -->
+          <span class="animate scroll" style="--i:6;"></span>
+          
+    </section>
+      
+    <section class="about" id="about">
+        <h2 class="heading">About <span>Me</span> <span class="animate scroll" style="--i:1;"></span></h2>
+        <div class="about-members">
+            <!-- Member 1 -->
+            <div class="about-member">
+                <div class="about-img">
+                    <img src="images/sabarish.jpg" alt="Naveen Kumar">
+                    <span class="circle-spin"></span>
+                    <span class="animate scroll" style="--i:2;"></span>
+                </div>
+                <div class="about-content">
+                    <h3>SABARISH</h3>
+                    <p>Lorem, ipsum.</p>
+                </div>
+            </div>
+            <!-- Member 2 -->
+            <div class="about-member">
+                <div class="about-img">
+                    <img src="images/jeeva.jpg" alt="Member 2">
+                    <span class="circle-spin"></span>
+                    <span class="animate scroll" style="--i:3;"></span>
+                </div>
+                <div class="about-content">
+                    <h3>JEEVITHA KANNAN</h3>
+                    <p>Description</p>
+                </div>
+            </div>
+            <!-- Repeat for Member 3 and Member 4 -->
+            <!-- Member 3 -->
+            <div class="about-member">
+                <div class="about-img">
+                    <img src="images/mugundhan.jpg" alt="Member 3">
+                    <span class="circle-spin"></span>
+                    <span class="animate scroll" style="--i:4;"></span>
+                </div>
+                <div class="about-content">
+                    <h3>MUGUNDHAN</h3>
+                    <p>Description.</p>
+                </div>
+            </div>
+            <!-- Member 4 -->
+            <div class="about-member">
+                <div class="about-img">
+                    <img src="images/naveen.png" alt="Member 4">
+                    <span class="circle-spin"></span>
+                    <span class="animate scroll" style="--i:5;"></span>
+                </div>
+                <div class="about-content">
+                    <h3>NAVEEN KUMAR</h3>
+                    <p>Description</p>
+                </div>
+            </div>
+
+            <div class="about-member">
+                <div class="about-img">
+                    <img src="images/padhmasri.jpg" alt="Member 4">
+                    <span class="circle-spin"></span>
+                    <span class="animate scroll" style="--i:6;"></span>
+                </div>
+                <div class="about-content">
+                    <h3>PADHMASRI</h3>
+                    <p>Description</p>
+                </div>
+            </div>
+            <!-- Repeat the above structure for each set of 4 members -->
+        </div>
+    </section>
+    
+    <!-- contact section design -->
+  <section class="contact" id="contact">
+        <h2 class="heading">Contact<span>Me</span><span class="animate scroll" style="--i:1;"></span></h2>
+        <form action="https://formspree.io/f/moqzggqb" method="POST" class="contact__form">
+          <div class="input-box">
+            <div class="input-field">
+              <input type="text" name="First Name" placeholder="First Name" required>
+              <span class="focus"></span>
+            </div>
+      
+            <div class="input-field">
+              <input type="text" name="Last Name" placeholder="Last Name" required>
+              <span class="focus"></span>
+            </div>
+          </div>
+      
+          <div class="input-box">
+            <div class="input-field">
+              <input type="number" name="Mobile Number" placeholder="Your Mobile Number" required>
+              <span class="focus"></span>
+            </div>
+
+                <div class="input-field">
+                  <input type="email" name="Email address" placeholder="Email Address" required>
+                  <span class="focus"></span>
+                </div>
+          
+          </div>
+          
+
+          <div class="textarea-field">
+            <textarea name="Message" cols="30" rows="10" placeholder="Your message is required...."></textarea>
+            <span class="focus"></span>
+          </div>
+      
+          <div class="btn-box btns">
+            <button type="submit" class="btn">Submit</button>
+          </div>
+        </form>
+      </section>
+  
+    
+
+    <!-- footer design -->
+
+    <footer class="footer">
+<div class="footer-text">
+    <p>
+        Copyright &copy; 2024 by Team Excalibur 
+    </p>
+    
+</div>
+    <div class="footer-iconTop">
+        <a href="#"><i class='bx bx-up-arrow-alt'></i></a>
+        
+    </div>
+    </footer>
+
+
+    <script>
+let menuIcon = document.querySelector('#menu-icon');
+let navbar = document.querySelector('.navbar');
+
+menuIcon.onclick = () => {
+    menuIcon.classList.toggle('bx-x');
+    navbar.classList.toggle('active');
+};
+
+let sections = document.querySelectorAll('section');
+let navLinks = document.querySelectorAll('header nav a');
+
+window.onscroll = () => {
+    sections.forEach(sec => {
+        let top = window.scrollY;
+        let offset = sec.offsetTop - 100;
+        let height = sec.offsetHeight;
+        let id = sec.getAttribute('id');
+
+        if (top >= offset && top < offset + height) {
+            navLinks.forEach(links => {
+                links.classList.remove('active');
+            
+            document.querySelector('header nav a[href*="' + id + '"]').classList.add('active');
+        });
+        sec.classList.add('show-animate');
+    }
+    else{
+        sec.classList.remove('show-animate');
+        }
+        
+    });
+
+    let header = document.querySelector('header');
+    header.classList.toggle('sticky', window.scrollY > -100);
+
+    menuIcon.classList.remove('bx-x');
+    navbar.classList.remove('active');
+
+    let footer = document.querySelector('footer');
+    footer.classList.toggle('show-animate',this.innerHeight + this.scrollY >= document.scrollingElement.scrollHeight);
+};
+
+
+       var typed = new Typed(".auto-type", {
+    strings: [
+        "Hidden Costs in E-commerce",
+        "Uncover Additional Expenses",
+        "Ensure Accurate Budgeting",
+        "Consider Payment Gateway Fees",
+        "Account for Shipping Costs",
+        "Understand Tax Compliance",
+        "Beware of Customs Duties",
+        "Factor in Return and Refund Costs",
+        "Account for E-commerce Platform Fees",
+        "Consider Security and Compliance",
+        "Include Marketing and Advertising Expenses",
+        "Factor in Hosting and Maintenance Costs",
+        "Plan for Technology Integration Expenses",
+        "Don't Forget Customer Service Costs",
+        "Ensure Transparent Communication with Customers"
+    ],
+    typeSpeed: 100,
+    backSpeed: 50,
+    loop: true
+});
+
+function clearOutput() {
+  // Select the result div
+  var resultDiv = document.querySelector('.scraper-result');
+  
+  // If the result div exists, clear its content
+  if (resultDiv) {
+    resultDiv.innerHTML = '';
+  }
+}
+
+    </script>
+
+</body>
+
+</html>
