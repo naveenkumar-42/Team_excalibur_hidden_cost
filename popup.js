@@ -89,7 +89,7 @@ function fetchAndDisplayValues() {
       chrome.runtime.sendMessage({ action: 'setIcon', path: 'images/red.png' });
     }
         toggleElementsDisplay(['flipkartFullPrices', 'flipkartOfferPrices', 'flipkartPriceDifference', 'flipkartdiscountDifference', 'flipkartComparePrice'], 'block');
-        hideElements(['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'amazonComparePrice']);
+        hideElements(['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference','amazonProductTotal', 'amazonComparePrice']);
       }
     });
   });
