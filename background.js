@@ -4,7 +4,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.action === 'toggleHighlighting') {
     isHighlighting = !isHighlighting; 
 
-    // if (isHighlighting) { // if the toggle is turned on
+    // if (!isHighlighting) { // if the toggle is turned off
     //   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     //     chrome.tabs.reload(tabs[0].id);
     //   });

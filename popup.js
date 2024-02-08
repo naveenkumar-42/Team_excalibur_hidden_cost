@@ -29,6 +29,8 @@ function fetchAndDisplayValues() {
       selectedPlatform = 'amazon';
     } else if (url.includes('flipkart')) {
       selectedPlatform = 'flipkart';
+    }else {
+      chrome.runtime.sendMessage({ action: 'setIcon', path: 'images/default.png' });
     }
     toggleElementsDisplay([
       'amazonFullPrice',
@@ -66,11 +68,10 @@ function fetchAndDisplayValues() {
     if (result.amazonComparePrice.some(price => price.includes('no'))) {
       amazonComparePriceElement.style.color = '#00FA9A';
       chrome.runtime.sendMessage({ action: 'setIcon', path: 'images/green.png' });
-      
-    } else {
+    } else if (result.amazonComparePrice.some(price => !price.includes('no'))) {
       amazonComparePriceElement.style.color = 'red';
       chrome.runtime.sendMessage({ action: 'setIcon', path: 'images/red.png' });
-        }
+    }
         toggleElementsDisplay(['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'amazonComparePrice'], 'block');
         hideElements(['flipkartFullPrices', 'flipkartOfferPrices', 'flipkartPriceDifference', 'flipkartdiscountDifference', 'flipkartComparePrice']);
       } else if (selectedPlatform === 'flipkart') {
@@ -84,7 +85,7 @@ function fetchAndDisplayValues() {
     if (result.flipkartComparePrice.some(price => price.includes('no'))) {
       flipkartComparePriceElement.style.color = '#00FA9A';
       chrome.runtime.sendMessage({ action: 'setIcon', path: 'images/green.png' });
-    } else {
+    } else if (result.flipkartComparePrice.some(price => !price.includes('no'))){
       flipkartComparePriceElement.style.color = 'red';
       chrome.runtime.sendMessage({ action: 'setIcon', path: 'images/red.png' });
     }
