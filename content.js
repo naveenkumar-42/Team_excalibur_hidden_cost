@@ -45,7 +45,7 @@ function highlightAmazonProductDetails() {
   let discountDifferenceArray = amazonPriceDifferenceArray.map((amazonPriceDifference, index) => {
     let productPriceValue = parseFloat(productPrices[index]?.textContent.replace(/,/g, '').replace('₹', ''));
     let ans = productPriceValue - amazonPriceDifference;
-    return  ans.toFixed(2);
+    return ans.toFixed(2);
   });
 
   chrome.storage.local.set({
@@ -56,9 +56,60 @@ function highlightAmazonProductDetails() {
     'amazonProductTotal': Array.from(productTotal).map(total => total.textContent),
     'amazonPriceDifference': amazonPriceDifferenceArray,
     'amazonComparePrice': amazonComparePriceArray,
-    'discountDifference' : discountDifferenceArray 
+    'discountDifference': discountDifferenceArray
   });
+
+  // Function to update stored values
+  function updateStoredValues() {
+    chrome.storage.local.get(['deliveryAmount', 'itemsAmount', 'orderTotalAmount', 'promotionAppliedAmount', 'totalAmount'], function(result) {
+      document.getElementById('deliveryAmount').textContent = 'Delivery Amount: ₹' + (result.deliveryAmount || 0).toFixed(2);
+      document.getElementById('itemsAmount').textContent = 'Items Amount: ₹' + (result.itemsAmount || 0).toFixed(2);
+      document.getElementById('orderTotalAmount').textContent = 'Order Total Amount: ₹' + (result.orderTotalAmount || 0).toFixed(2);
+      document.getElementById('promotionAppliedAmount').textContent = 'Promotion Applied Amount: ₹' + (result.promotionAppliedAmount || 0).toFixed(2);
+      document.getElementById('totalAmount').textContent = 'Total Amount: ₹' + (result.totalAmount || 0).toFixed(2);
+
+      const deliveryAmount = parseFloat(result.deliveryAmount) || 0;
+      const itemsAmount = parseFloat(result.itemsAmount) || 0;
+      const orderTotalAmount = parseFloat(result.orderTotalAmount) || 0;
+      const promotionAppliedAmount = parseFloat(result.promotionAppliedAmount) || 0;
+      const totalAmount = parseFloat(result.totalAmount) || 0;
+
+      const updatedTotalAmount = totalAmount - deliveryAmount;
+
+      document.getElementById('totalAmount').textContent = 'Total Amount: ₹' + updatedTotalAmount.toFixed(2);
+    });
+  }
+
+  chrome.storage.local.get(['totalAmount', 'amazonProductPrices'], function(result) {
+    document.getElementById('totalAmount').textContent = 'Total Amount: ₹' + (result.totalAmount || 0).toFixed(2);
+    const totalAmount = parseFloat(result.totalAmount) || 0;
+    const amazonProductPrices = result.amazonProductPrices || [];
+
+    const updatedPrices = amazonProductPrices.map(price => {
+      return price - totalAmount;
+    });
+
+    chrome.storage.local.get(['totalAmount', 'discountDifference'], function(result) {
+      document.getElementById('totalAmount').textContent = 'Total Amount: ₹' + (result.totalAmount || 0).toFixed(2);
+
+      const discountDifference = result.discountDifference || [];
+      const sumDiscountDifference = discountDifference.reduce((acc, cur) => acc + parseFloat(cur), 0);
+
+      const totalAmount = parseFloat(result.totalAmount) || 0;
+      const newTotalAmount = totalAmount + sumDiscountDifference;
+
+      document.getElementById('totalAmount').textContent = 'Total Amount: ₹' + newTotalAmount.toFixed(2);
+
+      chrome.storage.local.set({
+        'AmazonProductFinalPrices': updatedPrices,
+        'amazontotalHiddenCost': newTotalAmount
+      });
+    });
+  });
+
+  updateStoredValues();
 }
+
 
 function highlightFlipkartProductDetails() {
   const productPrices = document.querySelectorAll('#container div._30jeq3._16Jk6d, #container > div > div._1Er18h > div > div._1YokD2._2GoDe3.col-12-12 > div:nth-child(1) > div > div:nth-child(3) > div > div._2nQDXZ > div._3fSRat > span._2-ut7f._1WpvJ7');
