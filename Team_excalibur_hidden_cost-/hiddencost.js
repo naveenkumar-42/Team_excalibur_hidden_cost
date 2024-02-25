@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function fetchAndDisplayValues() {
-  const amazonElements = ['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'amazonComparePrice'];
+  const amazonElements = ['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'amazonComparePrice','deliveryAmount'];
   const flipkartElements = ['flipkartFullPrices', 'flipkartOfferPrices', 'flipkartPriceDifference', 'flipkartdiscountDifference', 'flipkartComparePrice'];
   const ajioElements = ['ajioFullPrice', 'ajioDiscountPrices', 'ajioPriceDifference', 'ajiodiscountDifference', 'ajioComparePrice'];
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -52,12 +52,13 @@ function fetchAndDisplayValues() {
     toggleElementsDisplay([...amazonElements, ...flipkartElements, ...ajioElements], 'none'); // Combine arrays and hide all elements
 
     chrome.storage.local.get([
-      'amazonPriceDifference', 'amazonFullPrice', 'amazonDiscountPrices', 'discountDifference', 'flipkartPriceDifference',
-      'flipkartFullPrices', 'flipkartOfferPrices', 'flipkartdiscountDifference', 'amazonComparePrice', 'flipkartComparePrice',
-      'ajioPriceDifference', 'ajioFullPrice', 'ajioDiscountPrices', 'ajiodiscountDifference', 'ajioComparePrice'
-    ], function (result) {
+    'amazonPriceDifference', 'amazonFullPrice', 'amazonDiscountPrices', 'discountDifference','deliveryAmount', 'flipkartPriceDifference',
+    'flipkartFullPrices', 'flipkartOfferPrices', 'flipkartdiscountDifference', 'amazonComparePrice', 'flipkartComparePrice',
+    'ajioPriceDifference', 'ajioFullPrice', 'ajioDiscountPrices', 'ajiodiscountDifference', 'ajioComparePrice'
+  ], function (result) {
       if (selectedPlatform === 'amazon') {
         displayAmazonValues(result);
+        displayDeliveryAmount(result.deliveryAmount);
       } else if (selectedPlatform === 'flipkart') {
         displayFlipkartValues(result);
       } else if (selectedPlatform === 'ajio') {
@@ -68,11 +69,12 @@ function fetchAndDisplayValues() {
 }
 
 function displayAmazonValues(result) {
-  const amazonElements = ['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'amazonComparePrice'];
+  const amazonElements = ['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'amazonComparePrice', 'deliveryAmount'];
   document.getElementById('amazonFullPrice').innerHTML = '<h2>Amazon Full Price:</h2><p>' + result.amazonFullPrice.join(', ') + '</p>';
   document.getElementById('amazonDiscountPrices').innerHTML = '<h2>Amazon Discount Prices:</h2><p>' + result.amazonDiscountPrices.join(', ') + '% </p>';
   document.getElementById('amazonPriceDifference').innerHTML = '<h2>Amazon Price Difference:</h2><p>' + result.amazonPriceDifference.join(', ') + '</p>';
   document.getElementById('discountDifference').innerHTML = '<h2>Amazon Discount Difference:</h2><p>' + result.discountDifference.join(', ') + '</p>';
+  document.getElementById('deliveryAmount').innerHTML = '<h2>Amazon Delivery Amount:</h2><p>' + (result.deliveryAmount || 'N/A') + '</p>';
   document.getElementById('amazonComparePrice').innerHTML = '<h1>' + result.amazonComparePrice.join(', ') + '</h1>';
   updateIconAndTextColor(result.amazonComparePrice, 'amazonComparePrice');
   toggleElementsDisplay(amazonElements, 'block');
@@ -88,7 +90,7 @@ function displayFlipkartValues(result) {
   document.getElementById('flipkartComparePrice').innerHTML = '<h1>' + result.flipkartComparePrice.join(', ') + '</h1>';
   updateIconAndTextColor(result.flipkartComparePrice, 'flipkartComparePrice');
   toggleElementsDisplay(flipkartElements, 'block');
-  hideElements(['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'amazonProductTotal', 'amazonComparePrice','ajioFullPrice', 'ajioDiscountPrices', 'ajioPriceDifference', 'ajiodiscountDifference', 'ajioComparePrice']);
+  hideElements(['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'deliveryAmount','amazonProductTotal', 'amazonComparePrice','ajioFullPrice', 'ajioDiscountPrices', 'ajioPriceDifference', 'ajiodiscountDifference', 'ajioComparePrice']);
 }
 
 function dissplayAjioValue(result) {
@@ -100,7 +102,7 @@ function dissplayAjioValue(result) {
   document.getElementById('ajioComparePrice').innerHTML = '<h1>' + result.ajioComparePrice.join(', ') + '</h1>';
   updateIconAndTextColor(result.ajioComparePrice, 'ajioComparePrice');
   toggleElementsDisplay(ajioElements, 'block');
-  hideElements(['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'amazonComparePrice', 'flipkartFullPrices', 'flipkartOfferPrices', 'flipkartPriceDifference', 'flipkartdiscountDifference', 'flipkartComparePrice']);``
+  hideElements(['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'amazonComparePrice','deliveryAmount', 'flipkartFullPrices', 'flipkartOfferPrices', 'flipkartPriceDifference', 'flipkartdiscountDifference', 'flipkartComparePrice']);``
 }
 
 function updateIconAndTextColor(prices, elementId) {
@@ -116,7 +118,7 @@ function updateIconAndTextColor(prices, elementId) {
 }
 
 function hideAllValues() {
-  const allElements = ['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'amazonComparePrice',
+  const allElements = ['amazonFullPrice', 'amazonDiscountPrices', 'amazonPriceDifference', 'discountDifference', 'amazonComparePrice','deliveryAmount',
     'flipkartFullPrices', 'flipkartOfferPrices', 'flipkartPriceDifference', 'flipkartdiscountDifference', 'flipkartComparePrice',
     'ajioFullPrice', 'ajioDiscountPrices', 'ajioPriceDifference', 'ajiodiscountDifference', 'ajioComparePrice'];
   toggleElementsDisplay(allElements, 'none');
@@ -141,18 +143,6 @@ let backButton = document.querySelector('.back_button');
 backButton.addEventListener('click', function () {
   chrome.runtime.sendMessage({ action: 'backButtonClicked' });
 });
-
-
-
-
-// // popup.js
-// document.getElementById('urlForm').addEventListener('submit', function (event) {
-//   event.preventDefault();
-//   const url = document.getElementById('urlInput').value;
-
-//   chrome.runtime.sendMessage({ action: 'openNewTab', url: url });
-// }); 
-
 
 
 window.onload = function () {
