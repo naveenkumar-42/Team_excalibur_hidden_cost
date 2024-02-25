@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChatBot Extension</title>
+    <link rel="stylesheet" href="css/chatbot.css" />
+  </head>
+  <body>
+    <section class="msger">
+    
+      <div  class="msger-header-title">
+        <a href=""><i class="fas fa-times" style="right: 0; position: relative; display: block; float: right;"></i></a>
+      </div>
+    <main class="msger-chat" id="chatContainer">
+    <div class="chat-container">
+      <div class="msg left-msg">
+        <div class="msg-bubble">
+          <div class="msg-info">
+            <div class="msg-info-name">Bot</div>
+          </div>
+          <div class="msg-text">
+            Hey, I am chatBot! How can I help you? 😄
+          </div>
+        </div>
+      </div>
+    </div>
+    </main>
+    <form class="msger-inputarea">
+        <input type="text" class="msger-input" id="textInput" placeholder="Type your message...">
+        <button type="submit" class="msger-send-btn"  id="sendBtn">Send</button>
+        <button type="button" class="msger-send-btn" id="clearBtn">Clear</button>
+
+      </form>
+  </section>
+
+    <script src="js/chatbot.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+This code reads a CSV file, checks for data integrity issues like duplicate rows, missing values, and abnormal ratings. It performs text analysis for sentiment and time-based and user behavior analysis if relevant columns are present. Finally, it visualizes review counts by categories and labels using seaborn.

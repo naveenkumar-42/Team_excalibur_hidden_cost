@@ -1,0 +1,4 @@
+Visualization of label distribution and pattern category distribution using seaborn countplots.
+Sentiment analysis of the text data using TextBlob, with visualization of the sentiment distribution.
+Keyword extraction and generation of a word cloud from the text data using the WordCloud library.
+Run this code in Google Colab, and it will display the visualizations and additional features based on your dataset. Adjustments can be made to the visualizations and features as needed.
