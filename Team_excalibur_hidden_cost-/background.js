@@ -114,6 +114,7 @@ function demo(sendResponse) {
         promotionAppliedAmount: promotionApplied || 0,
         totalAmount: total || 0
       });
+       chrome.runtime.reload();
     })
     .catch(error => {
       console.error('Error fetching data:', error);

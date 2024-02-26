@@ -59,7 +59,6 @@ function highlightAmazonProductDetails() {
     'discountDifference': discountDifferenceArray
   });
 
-  // Function to update stored values
   function updateStoredValues() {
     chrome.storage.local.get(['deliveryAmount', 'itemsAmount', 'orderTotalAmount', 'promotionAppliedAmount', 'totalAmount'], function (result) {
       document.getElementById('deliveryAmount').textContent = 'Delivery Amount: ₹' + (result.deliveryAmount || 0).toFixed(2);
