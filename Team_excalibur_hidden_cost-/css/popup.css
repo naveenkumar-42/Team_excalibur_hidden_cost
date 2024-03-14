@@ -69,13 +69,11 @@ font-weight: 600;
 letter-spacing: .1rem;
 color: var(--bg-color);
 z-index:1 ;
-overflow: hidden;
 transition: .5s;
 text-decoration: none;
 margin: 10px;
 margin-left: 0px;
 }
-
 .btn-box .btn:nth-child(2),
 .btn-box .btn:nth-child(3){
 background-color:transparent ;

@@ -13,6 +13,10 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.container{
+    border: solid 2px var(--text-color);
+}
+
 .popup-container {
     text-align: center;
 }
@@ -246,9 +250,11 @@ button:hover {
     height: 50px;
     margin-left: 55px;
     margin-top: 50px;
+    padding-bottom: 50px;
   }
 
 .analyze-button:hover {
     background-color: var(--bg-color);
     color: var(--main-color);
+    border:solid var(--main-color);
   }
