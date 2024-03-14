@@ -19,7 +19,7 @@ def get_flipkart_price(product_titles):
             flipkart_price = price_element.text.strip().replace('₹', '').replace(',', '')
             flipkart_prices.append(flipkart_price)
         else:
-            flipkart_prices.append("Price not available on Flipkart")
+            flipkart_prices.append("Product not available on Flipkart")
     return flipkart_prices
 
 
@@ -40,7 +40,7 @@ def compare_prices():
     for flipkart_price, amazon_price in zip(flipkart_prices, amazonProductPrices):
         if amazon_price is None:
             comparison_result = "Unable to compare. Amazon price not available."
-        elif flipkart_price == "Price not available on Flipkart":
+        elif flipkart_price == "Product not available on Flipkart":
             comparison_result = "Price not available on Flipkart"
         else:
             try:

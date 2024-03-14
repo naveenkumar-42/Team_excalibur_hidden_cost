@@ -165,7 +165,7 @@ window.onload = function () {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === "update_current_count") {
-    document.getElementsByClassName("number")[0].textContent = (request.count/3).toFixed(0);
+    document.getElementsByClassName("number")[0].textContent = (request.count/10).toFixed(0);
   }
 });
 
