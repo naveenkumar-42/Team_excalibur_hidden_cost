@@ -44,10 +44,9 @@ list-style-type: none;
 position: relative;
 display: flex;
 justify-content: space-evenly;
-width: 2rem;
+margin-left: 13px;
 cursor: pointer;
 align-items: center;
-margin: 0 auto;
 font-weight: bold;
 }
 

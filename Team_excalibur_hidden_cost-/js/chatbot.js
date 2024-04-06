@@ -160,8 +160,8 @@ document.addEventListener("DOMContentLoaded", function () {
 "deceptive subscription bundles": "Offering subscription bundles with hidden terms or fees, misleading users about the true cost or value.",
 "false authority endorsements": "Falsely claiming endorsements or certifications to create a sense of legitimacy or trustworthiness.",
 "exploitative user generated content": "Allowing or encouraging users to generate content that benefits the platform or service provider without fair compensation or recognition.",
-"deceptive referral programs": "Promoting referral programs with misleading rewards or terms, leading users to make referrals under false pretenses."           
-
+"deceptive referral programs": "Promoting referral programs with misleading rewards or terms, leading users to make referrals under false pretenses.",
+"default opt-ins": "Automatically opting users into services, features, or data collection without their explicit consent."
      };
     });
   

@@ -169,6 +169,6 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 });
 
-document.querySelector('.analyze-button').addEventListener('click', function() {
+document.querySelector('.analyze-button').addEventListener('click', function () {
   document.querySelector('.number').textContent = 'Detecting...';
 });
